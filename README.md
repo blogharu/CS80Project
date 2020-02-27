@@ -6,7 +6,7 @@ Our Capstone Project is a project to automate SolidWorks operations from: genera
 
 Clone the repository into a directory
 
-'''git
+``` bash
 git clone https://github.com/blogharu/CS80Project.git
 
 ## Dependencies
