@@ -4,7 +4,7 @@ Our Capstone Project is a project to automate SolidWorks operations from: genera
 
 ## Installation
 
-Clone the repository into a directory
+Clone the repository into a given directory
 
 ``` bash
 git clone https://github.com/blogharu/CS80Project.git
@@ -15,8 +15,9 @@ git clone https://github.com/blogharu/CS80Project.git
 This projects uses:
 
 - Visual Studio
+- C#
 - SolidWorks 2019
-- Python (Optimization)
+- Python3
 - Iron Python
 
 This project also uses references in Visual Studios to run properly:
