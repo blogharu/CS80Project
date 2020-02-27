@@ -32,6 +32,7 @@ namespace CS80Project
             InitializeComponent();
 
             this.parrentUI = parrentUI;
+            this.TopLevel = true;
             string[] globalVariables = parrentUI.SolidWorksSingleton.getSolidWorksGlobalVariables();
             int i = 0;
 
@@ -86,8 +87,11 @@ namespace CS80Project
                 ListViewItem temp = new ListViewItem(name);
                 temp.SubItems.Add(min + " - " + max);
                 parrentUI.getVariablesListView().Items.Add(temp);
-                Close();
+                this.textBoxVariableName.Text = null;
+                this.textBoxVariableMax.Text = null;
+                this.textBoxVariableMin.Text = null;
             }
+            this.TopLevel = true;
         }
 
         private void radioButtonVariableTypeFloat_CheckedChanged(object sender, EventArgs e)
