@@ -4,18 +4,20 @@ Our Capstone Project is a project to automate SolidWorks operations from: genera
 
 ## Installation
 
-Clone the repository into a directory
+Clone the repository into a given directory
 
-''' git
+``` bash
 git clone https://github.com/blogharu/CS80Project.git
+```
 
 ## Dependencies
 
 This projects uses:
 
 - Visual Studio
+- C#
 - SolidWorks 2019
-- Python (Optimization)
+- Python3
 - Iron Python
 
 This project also uses references in Visual Studios to run properly:
@@ -37,7 +39,7 @@ SolidWorks:
 
 ## Usage
 
-With all of the dependencies, this program runs via the run button in Visual Studios. SolidWorks should launch, and there will be a Pikachu button that is this add-on. There are a series of features such as:
+Once cloned into a directory and having referenced all of the dependencies, one can build this project then start SolidWorks and there will be a Pikachu icon on the left menu bar; this is the add-on. There are a variety of features such as:
 
 - Adding and Deleting variables
 - Listing variables
