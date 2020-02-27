@@ -27,6 +27,7 @@ namespace CS80Project
         {
             InitializeComponent();
             this.parrentUI = parrentUI;
+            this.TopLevel = true;
 
             if (parrentUI.SolidWorksSingleton.constraints.constraintsName != null)
             {
@@ -83,8 +84,10 @@ namespace CS80Project
                 temp = new ListViewItem(name);
                 temp.SubItems.Add(constraint);
                 parrentUI.getConstraintsListView().Items.Add(temp);
-                this.TopLevel = true;
+                this.textBox2.Text = null;
+                this.textBox1.Text = null;
             }
+            this.TopLevel = true;
         }
 
         private void buttonFinish_Click(object sender, EventArgs e)
