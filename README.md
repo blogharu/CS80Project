@@ -39,7 +39,7 @@ SolidWorks:
 
 ## Usage
 
-With all of the dependencies, this program runs via the run button in Visual Studios. SolidWorks should launch, and there will be a Pikachu button that is this add-on. There are a series of features such as:
+Once cloned into a directory and having referenced all of the dependencies, one can build this project then start SolidWorks and there will be a Pikachu icon on the left menu bar; this is the add-on. There are a variety of features such as:
 
 - Adding and Deleting variables
 - Listing variables
