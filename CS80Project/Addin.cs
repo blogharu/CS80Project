@@ -149,6 +149,12 @@ namespace CS80Project
                     }
                 }
 
+                if( float.Parse(min, System.Globalization.CultureInfo.InvariantCulture) >= float.Parse(max, System.Globalization.CultureInfo.InvariantCulture) )
+                {
+                    swApp.SendMsgToUser("Error: Invalid min and max values");
+                    return 1;
+                }
+
                 variablesName[numVariables] = name;
                 variablesMax[numVariables] = max;
                 variablesMin[numVariables] = min;
