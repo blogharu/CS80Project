@@ -8,6 +8,7 @@ Clone the repository into a directory
 
 ``` bash
 git clone https://github.com/blogharu/CS80Project.git
+```
 
 ## Dependencies
 
