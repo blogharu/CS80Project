@@ -266,6 +266,16 @@ namespace CS80Project
             swApp = ThisSW as SldWorks;
             swApp.SetAddinCallbackInfo2(0, this, Cookie);
             SessionCookie = Cookie;
+    
+            string[] paths = System.Environment.GetEnvironmentVariable("PATH").Split(';');
+            foreach (string path in paths)
+            {
+                if( path.Contains("Python") && !path.Contains("Scripts") )
+                {
+                    pythonLocation = path + "python.exe";
+                    break;
+                }
+            }
 
             LoadUI();
             
