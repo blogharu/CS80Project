@@ -18,16 +18,10 @@ This projects uses:
 - C#
 - SolidWorks 2019
 - Python3
-- Iron Python
+  - NumPy
+  - SciPy
 
 This project also uses references in Visual Studios to run properly:
-
-Iron Python: 
-
-- IronPython
-- IronPython.Modules
-- IronPython.SQLite
-- IronPython.Wpf
 
 SolidWorks:
 
