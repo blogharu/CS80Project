@@ -14,16 +14,16 @@ def leastSquare(listSamples, listResults, numVariables):
     C = XTX.I*XTY
 
     # Get the minimum and maximum value of C
-    minC = C[numVariables-1][0]
-    maxC = C[numVariables-1][0]
-    for i in range(numVariables-1):
-        if minC > C[i][0]:
-            minC = C[i][0]
-        if maxC < C[i][0]:
-            maxC = C[i][0]
+    #minC = C[numVariables-1][0]
+    #maxC = C[numVariables-1][0]
+    #for i in range(numVariables-1):
+    #    if minC > C[i][0]:
+    #        minC = C[i][0]
+    #    if maxC < C[i][0]:
+    #        maxC = C[i][0]
 
     # Normalize vector C
-    C = (C-minC)/(maxC-minC)
+    #C = (C-minC)/(maxC-minC)
     return C
 
 
@@ -87,7 +87,7 @@ def countNumVariablesInEquation (equation, varDicID):
 def calculateEquationReturnString(x, equation, varDic):
     temp = ""
     temp = removeParenthesis(x, equation, varDic)
-    #temp = removeMath(x, temp, varDic)
+    temp = removeMath(x, temp, varDic)
     #temp = removePower(x, temp, varDic)
     temp = removeVariablesFromString(x, temp, varDic)
     return str(eval(temp))
@@ -106,22 +106,53 @@ def removeParenthesis(x, equation, varDic):
             if numLeftParenthesis == 0:
                 result = result + temp
                 temp = ""
+            else:
+                temp = temp + char
             numLeftParenthesis += 1
         elif char == ')':
             numLeftParenthesis -= 1
             if numLeftParenthesis == 0:
                 result = result + calculateEquationReturnString(x, temp, varDic)
                 temp = ""
+            else:
+                temp = temp + char
         else:
             temp = temp + char
     result = result + temp
     return result
 
 ##################################################
-def removeMath(x, equation, varDic):
+def removeMath(x, simpleEquation, varDic):
+    temp = ""
+    arg = ""
+    equation = simpleEquation
     if printCalculationSteps == 1:
         print("removeMath!")
         print(equation)
+    while equation.find('math.sin') != -1:
+        temp = equation[equation.find('math.sin') + 8:-1]
+        equation = equation[0:equation.find('math.sin')]
+        check = 0
+        for char in temp:
+            if char == '+' or char == '-' or char == '*' or char == '/' or char == '^':
+                arg = temp[0:temp.find(char)]
+                equation = equation + str(math.sin(float(arg)*math.pi/180)) + temp[temp.find(char):-1]
+                check = 1
+                break
+        if check == 0:
+            equation = equation + str(math.sin(float(temp)*math.pi/180))
+    while equation.find('math.cos') != -1:
+        temp = equation[equation.find('math.cos') + 8:-1]
+        equation = equation[0:equation.find('math.cos')]
+        check = 0
+        for char in temp:
+            if char == '+' or char == '-' or char == '*' or char == '/' or char == '^':
+                arg = temp[0:temp.find(char)]
+                equation = equation + str(math.cos(float(arg)*math.pi/180)) + temp[temp.find(char):-1]
+                check = 1
+                break
+        if check == 0:
+            equation = equation + str(math.cos(float(temp)*math.pi/180))
     return equation
 ##################################################
 
@@ -139,7 +170,7 @@ def removeVariablesFromString(x, simpleEquation, varDicID):
     mathCounter = 0
     if printCalculationSteps == 1:
         print("removeVariables!")
-        print(equation)
+        print(simpleEquation)
     for char in simpleEquation:
         if char == '+' or char == '-' or char == '*' or char == '/' or char == '^':
             if temp == "":
