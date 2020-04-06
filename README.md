@@ -33,7 +33,7 @@ SolidWorks:
 
 ## Usage
 
-Once cloned into a directory and having referenced all of the dependencies, one can build this project in Visual Studios using admin/root privillages then start SolidWorks and there will be a Pikachu icon on the left menu bar; this is the add-on. There are a variety of features such as:
+Once cloned into a directory and having referenced all of the dependencies, one can build this project in Visual Studios using admin/root privillages, then start SolidWorks, and there will be a Pikachu icon on the left menu bar; this is the add-on. There are a variety of features such as:
 
 - Adding and Deleting variables
 - Listing variables
