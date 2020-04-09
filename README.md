@@ -48,9 +48,21 @@ In short, the steps to use the program are as follows:
 1. Download the code from github,
 2. Open the program in Visual Studios in Administrator Mode (It's crucial that it's done in administrator mode, to allow the necessary permissions)
 3. Open the solution from our github.
-4. Change the resource dll files found in the user's SolidWorks install location with the ones from our github.
-5. Run the program.
-6. From the SolidWorks, click the pikachu icon and connect the python.exe
+4. Grab the following files from your SolidWorks folder found on the C Drive:
+    SolidWorks.Interop.sldworks.dll
+    SolidWorks.Interop.sw3dprinter.dll
+    SolidWorks.Interop.swcommands.dll
+    SolidWorks.Interop.swconst.dll
+    SolidWorks.Interop.swdimxpert.dll
+    SolidWorks.Interop.swdocumentmgr.dll
+    SolidWorks.Interop.swmotionstudy.dll
+    SolidWorks.Interop.swpublished.dll
+    SolidWorks.Interop.SWRotuingLib.dll
+4.5 Place them in CS80project->bin-Debug
+
+
+5. Compile and run the program.
+6. Launch SolidWorks, click the pikachu icon and connect the python.exe
 
 
 ## Contributing
