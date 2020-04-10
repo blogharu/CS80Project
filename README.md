@@ -68,7 +68,9 @@ In short, the steps to use the program are as follows:
 - SolidWorks.Interop.SWRotuingLib.dll
 
 4.5 Place them in CS80project->bin-Debug
+
 5. Compile and run the program.
+
 6. Launch SolidWorks, click the pikachu icon and connect the python.exe
 
 
