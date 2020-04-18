@@ -59,12 +59,11 @@ Steps to use program:
 2. Open the program in Visual Studios in Administrator Mode (It's crucial that it's done in administrator mode, to allow the necessary permissions)
 3. Open the solution from our github.
 4. Grab the following files from your SolidWorks folder found on the C Drive:
-
-- SolidWorks.Interop.sldworks.dll
-- SolidWorks.Interop.swcommands.dll
-- SolidWorks.Interop.swconst.dll
-- SolidWorks.Interop.swdocumentmgr.dll
-- SolidWorks.Interop.swpublished.dll
+    - SolidWorks.Interop.sldworks.dll
+    - SolidWorks.Interop.swcommands.dll
+    - SolidWorks.Interop.swconst.dll
+    - SolidWorks.Interop.swdocumentmgr.dll
+    - SolidWorks.Interop.swpublished.dll
 
   and place them in CS80project->bin-Debug
   
