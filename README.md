@@ -66,13 +66,14 @@ Steps to use program:
 - SolidWorks.Interop.swdocumentmgr.dll
 - SolidWorks.Interop.swpublished.dll
 
-and place them in CS80project->bin-Debug
+  and place them in CS80project->bin-Debug
+  
 5. Build the program
-  - Running it will cause an error as it is not an executable
+    - Note: Running it will cause an error as it is not an executable
 6. Launch SolidWorks, click the pikachu icon and connect the python.exe
 
 ## Demo Video
 
 Below links to a demo video:
 
-- [Demo Video](https://youtu.be/ybNKb1qOqOw "Capstone 80 - Demo Video")
+- [Capstrone 80 - Demo Video](https://youtu.be/ybNKb1qOqOw "Capstone 80 - Demo Video")
