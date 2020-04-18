@@ -1,4 +1,4 @@
-# Capstone Project
+# Capstone Project - CS80
 
 Our Capstone Project is a project to automate SolidWorks operations from: generating new randomized objects to creating variables and constraints to keep objects in a certain shape and size, and optimize the objects based off of experimental data using statistics.
 
