@@ -1,0 +1,9 @@
+CS80PROJECT_VARIABLES_AND_CONSTRAINTS
+5,2
+angle,89.9,0.1,0
+d,0.45,0.1,0
+w,1,0.1,0
+l,10,1,0
+n,8,2,1
+Constraint 1,w * math.sin(angle) + d * math.cos(angle) <= 0.5
+Volume,((0.8 + l) * (0.8 + l) - (0.8 + l - 0.25) * (0.8 + l - 0.25)) * 3.141593 + 0.53 + (l - 0.25) * n * w * d = 8
