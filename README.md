@@ -65,7 +65,7 @@ Steps to use program:
     - SolidWorks.Interop.swdocumentmgr.dll
     - SolidWorks.Interop.swpublished.dll
 
-  and place them in CS80project->bin-Debug
+    and place them in CS80project->bin-Debug
   
 5. Build the program
     - Note: Running it will cause an error as it is not an executable
