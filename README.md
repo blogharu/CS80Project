@@ -37,7 +37,7 @@ How to:
 - Hover over "add" in the right click menu
 - Click "reference"
 - A pop-up will appear asking you to browse for the listed files above
-  - Defaul directory is: C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS
+  - Defaul directory is: C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\
 - Select the above files and add them
 
 ## Usage
