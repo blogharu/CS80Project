@@ -9,3 +9,4 @@ In this directory are the main components of the program including:
 - Python Optimization Files
     - Main Optimization Handler
     - Math Helper Functions
+    - Randomization Handler for Generating Random Object
