@@ -270,7 +270,7 @@ namespace CS80Project
             string[] paths = System.Environment.GetEnvironmentVariable("PATH").Split(';');
             foreach (string path in paths)
             {
-                if( path.Contains("Python") && !path.Contains("Scripts") )
+                if( path.Contains("Python3") && !path.Contains("Scripts") )
                 {
                     pythonLocation = path + "python.exe";
                     break;
