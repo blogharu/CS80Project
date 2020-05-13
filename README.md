@@ -6,7 +6,7 @@ Our Capstone Project is a project to automate SolidWorks operations from: genera
 
 Clone the repository into a given directory
 
-``` bash
+```bash
 git clone https://github.com/blogharu/CS80Project.git
 ```
 
@@ -19,8 +19,9 @@ This projects uses:
 - C#
 - SolidWorks 2019
 - Python3.4 and up
-  - NumPy
-  - SciPy
+
+	- NumPy 
+	- SciPy
 
 This project also uses references in Visual Studios to run properly:
 
@@ -32,18 +33,15 @@ SolidWorks:
 - SolidWorks.Interop.swdocumentmgr.dll
 - SolidWorks.Interop.swpublished.dll
 
-How to:
+	How to:
 
-- Right click the project in the right panel
-- Hover over "add" in the right click menu
-- Click "reference"
-- A pop-up will appear asking you to browse for the listed files above
-  - Default directory is: C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\
-- Select the above files and add them
+  	- Right click the project in the right panel
+  	- Hover over "add" in the right click menu - Click "reference" - A pop-up will appear asking you to browse for the listed files above - Default directory is: C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\
+  	- Select the above files and add them
 
-## Usage
+## Build
 
-Once cloned into a directory, opened the project in Visual Studios, and having referenced all of the dependencies, one can build this project in Visual Studios using admin/root privillages, then start SolidWorks, and there will be a Pikachu icon on the left menu bar; this is the add-on. There are a variety of features such as:
+Once cloned into a directory, opened the project in Visual Studios, and having referenced all of the dependencies, one can build this project in Visual Studios using admin/root privillages, then start SolidWorks, and there will be a Pikachu icon on the right menu bar; this is the add-on. There are a variety of features such as:
 
 - Adding and Deleting variables
 - Listing variables
@@ -59,21 +57,37 @@ Steps to use program:
 1. Download the code from github,
 2. Open the program in Visual Studios in Administrator Mode (It's crucial that it's done in administrator mode, to allow the necessary permissions)
 3. Open the solution from our github.
-4. Grab the following files from your SolidWorks folder found on the C Drive:
-    - SolidWorks.Interop.sldworks.dll
-    - SolidWorks.Interop.swcommands.dll
-    - SolidWorks.Interop.swconst.dll
-    - SolidWorks.Interop.swdocumentmgr.dll
-    - SolidWorks.Interop.swpublished.dll
+4. Grab the following files from your SolidWorks folder found on the C Drive - default directory is: C:\Program Files\SOLIDWORKS Corp\SOLIDWORKS\\:
 
-    and place them in CS80project->bin-Debug
-  
+   - SolidWorks.Interop.sldworks.dll
+   - SolidWorks.Interop.swcommands.dll
+   - SolidWorks.Interop.swconst.dll
+   - SolidWorks.Interop.swdocumentmgr.dll
+   - SolidWorks.Interop.swpublished.dll
+
+   and place them in CS80project->bin-Debug
+
 5. Build the program
-    - Note: Running it will cause an error as it is not an executable
+   - Note: Running it will cause an error as it is not an executable
 6. Launch SolidWorks, click the pikachu icon and connect the python.exe
+
+## Usage
+
+This section will cover usage and functionality of the add-on.
+
+### Functionality
+
+
+
+### Common Uses
 
 ## Demo Video
 
 Below links to a demo video:
 
 - [Capstrone 80 - Demo Video](https://youtu.be/ybNKb1qOqOw "Capstone 80 - Demo Video")
+
+## Troubleshoot
+
+- Can't find the add-on
+	This is because the add-on isn't showing. To fix this one must
