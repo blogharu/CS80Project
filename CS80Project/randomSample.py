@@ -55,6 +55,7 @@ for var in variablesDicID.keys():
             constraintsList.append([0,var+"-("+str(ran)+")"])
 
 # Set the function that the program will optimize.
+# Our program find the random sample by using optimization result.
 opObjFun = mf.getObjectiveFunctionForRandomGeneration(opInitial) ########### This is for maximize the result!
 opConsList = mf.getConstraintsForOptimization(constraintsList,variablesDicID)
 
