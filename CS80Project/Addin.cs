@@ -279,7 +279,7 @@ namespace CS80Project
                 return -1;
             }
 
-            public void setVariables()
+            public void setVariables() //sets variables inputted by user
             {
                 numVariables = 0;
                 variablesName = new string[MAX_VARIABLE_NUM];
@@ -288,7 +288,7 @@ namespace CS80Project
                 variablesType = new int[MAX_VARIABLE_NUM];
             }
 
-            public string[] getValues()
+            public string[] getValues() //gets values provided by user
             {
                 ModelDoc2 swModelDoc = swApp.ActiveDoc;
                 EquationMgr swEqnMgr = swModelDoc.GetEquationMgr();
@@ -322,7 +322,7 @@ namespace CS80Project
 
         #region Add-ins
 
-        public bool ConnectToSW(object ThisSW, int Cookie)
+        public bool ConnectToSW(object ThisSW, int Cookie) //This is where we create the UI
         {
             swApp = ThisSW as SldWorks;
             swApp.SetAddinCallbackInfo2(0, this, Cookie);
@@ -338,7 +338,7 @@ namespace CS80Project
                 }
             }
 
-            LoadUI();
+            LoadUI();//UI is loaded
             
             return true;
         }
@@ -433,7 +433,7 @@ namespace CS80Project
             return null;
         }
 
-        public bool setPythonLocation(string path)
+        public bool setPythonLocation(string path) //This function takes the user's input and syncs with the user's python.exe
         {
             ProcessStartInfo psi = new ProcessStartInfo();
 
@@ -468,7 +468,7 @@ namespace CS80Project
 
             ProcessStartInfo psi = new ProcessStartInfo();
 
-            if (pythonLocation == null)
+            if (pythonLocation == null) //Activates if user hasn't connected their Python.exe
             {
                 sendMessageToUser("You have to set your python location");
                 //pythonLocation = @"C:\Users\Paul Lee\AppData\Local\Programs\Python\Python37-32\python.exe";
@@ -517,7 +517,7 @@ namespace CS80Project
             return temp;
         }
 
-        public void generateRandomObject()
+        public void generateRandomObject() //this function makes the "generate Random Object" button in the GUI work
         {
             string[] arguments = new string[variables.numVariables + constraints.numConstraints+1];
             arguments[0] = variables.numVariables.ToString() + "," + constraints.numConstraints.ToString();
@@ -538,7 +538,7 @@ namespace CS80Project
             {
                 return;
             }
-            else if (pythonResult[1] == "false") {
+            else if (pythonResult[1] == "false") { //If couldn't create object
                 sendMessageToUser("Failed to generate random object");
                 return;
             }
@@ -674,7 +674,7 @@ namespace CS80Project
 
             catch (Exception e)
             {
-                swApp.SendMsgToUser("Save Error");
+                swApp.SendMsgToUser("Save Error"); //There was an error saving
                 return;
             }
         }
@@ -783,7 +783,7 @@ namespace CS80Project
 
         #region Optimization
 
-        public bool optimization(string learningRate)
+        public bool optimization(string learningRate) //The optimization function begins here
         {
             string[] pythonResult = runPython("optimization.py");
 /*
@@ -811,7 +811,7 @@ namespace CS80Project
                 stdout = process.StandardOutput.ReadToEnd();
             }
 */
-            if (pythonResult == null)
+            if (pythonResult == null) //could not get Python result
             {
                 return false;
             }
@@ -827,7 +827,7 @@ namespace CS80Project
             return false;
         }
 
-        public void learning (string result, string learningRateString)
+        public void learning (string result, string learningRateString) //learning algorithm
         {
             string[] csResult = result.Split(',');
             float learningRate = float.Parse(learningRateString);
