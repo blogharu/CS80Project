@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swpublished;
 using System.Runtime.InteropServices;
@@ -19,7 +18,7 @@ namespace CS80Project
         // If the system is in 32 bit, 
         // 1. Right click CS80Project
         // 2. Click properties
-        // 3. Click the platform tab under "Build"
+        // 3. Click the platform tab
         // 4. Change platform target to x86.
         //  - if system is in 64 bit, choose x64.
 
@@ -70,7 +69,7 @@ namespace CS80Project
                 {
                     if (name == constraintsName[i])
                     {
-                        swApp.SendMsgToUser("There is already a constraint called " + name + "!");
+                        swApp.SendMsgToUser("There is already constraint called " + name + "!");
                         return 0;
                     }
                 }
@@ -156,7 +155,7 @@ namespace CS80Project
                     return 1;
                 }
 
-                variablesName[numVariables] = name;
+                    variablesName[numVariables] = name;
                 variablesMax[numVariables] = max;
                 variablesMin[numVariables] = min;
                 variablesType[numVariables] = type;
@@ -410,7 +409,7 @@ namespace CS80Project
 
             if (pythonLocation == null)
             {
-                sendMessageToUser("You have to set your Python location");
+                sendMessageToUser("You have to set your python location");
                 //pythonLocation = @"C:\Users\Paul Lee\AppData\Local\Programs\Python\Python37-32\python.exe";
                 return null;
             }
@@ -567,9 +566,24 @@ namespace CS80Project
             swModelDoc.ForceRebuild3(true);
         }
 
-        public void sendMessageToUser(string message)
+        public void sendMessageToUser(string message) //for errors (warning yellow triangle)
         {
             swApp.SendMsgToUser(message);
+        }
+
+        public void sendMessageToUser2(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
+        {
+            swApp.SendMsgToUser2(message, icon, 2);
+        }
+
+        public void sendMessageToUser3(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
+        {
+            swApp.SendMsgToUser2(message, icon, 3);
+        }
+
+        public void sendMessageToUser4(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
+        {
+            swApp.SendMsgToUser2(message, icon, 4);
         }
 
         #endregion
@@ -607,7 +621,8 @@ namespace CS80Project
                     {
                         outFile.WriteLine("{0},{1}", constraints.constraintsName[i], constraints.constraintsEquation[i]);
                     }
-                    swApp.SendMsgToUser2("Variables and Constraints are saved",2, 2);
+                    //   swApp.SendMsgToUser2("Variables and Constraints are saved",icon,2);
+                    sendMessageToUser2("Variables and Constraints are saved", 2);
                 }
             }
 
@@ -673,15 +688,15 @@ namespace CS80Project
                         constraints.constraintsName[i] = csLine[0];
                         constraints.constraintsEquation[i] = csLine[1];
                     }
-
-                    swApp.SendMsgToUser2("Variables and Constraints are loaded",2,2);
+                    sendMessageToUser2("Variables and constrains have been loaded", 2);
+                    //swApp.SendMsgToUser("Variables and Constraints are loaded");
                 }
 
             }
 
             catch (Exception e)
             {
-                swApp.SendMsgToUser("No available file");
+                swApp.SendMsgToUser("Not available file");
                 return;
             }
         }
@@ -757,7 +772,7 @@ namespace CS80Project
             }
             else if (pythonResult[1] != "")
             {
-                sendMessageToUser(pythonResult[1]);
+                sendMessageToUser2(pythonResult[1],2);
             }
             else
             {
