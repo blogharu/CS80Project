@@ -1,9 +1,4 @@
-﻿///<summary>
-///     File Name: Addin.cs
-///     Description: Main SolidWorks add-on back-end
-/// </summary>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,13 +23,13 @@ namespace CS80Project
         //  - if system is in 64 bit, choose x64.
 
         #region constants
-        public const string SWTASKPANE_PROGID = "SolidWorksProgID"; // SolidWorks Process ID
-        public const int MAX_VARIABLE_NUM = 6; // Max limit on variable nuumber
-        public const int MAX_CONSTRAINT_NUM = 6; // Max limit on constant number
+        public const string SWTASKPANE_PROGID = "SolidWorksProgID";
+        public const int MAX_VARIABLE_NUM = 6;
+        public const int MAX_CONSTRAINT_NUM = 6;
         #endregion
 
         #region variables
-        public static SldWorks swApp; // Main SolidWorks Process 
+        public static SldWorks swApp;
         public Variables variables;
         public Constraints constraints;
 
@@ -47,74 +42,52 @@ namespace CS80Project
 
         #region Struct
 
-        /// <summary>
-        ///     Struct: Constraints Stuct handling
-        ///     Description: Main Back-end for constraints handling on CAD objects
-        /// </summary>
         public struct Constraints
         {
-            public int numConstraints; // Number of active constraints
-            public string[] constraintsName; // List of active constraints name
-            public string[] constraintsEquation; // List of active constraints equation
-
-            /// <summary>
-            /// Function Name: addConstraint
-            /// Description: Main back-end for adding constraints to the add-on 
-            /// </summary>
-            /// <param name="name">Name of the constraint to be added</param>
-            /// <param name="equation">Equation of the constraint to be added</param>
-            /// <returns>Error - 0, Success - 1</returns>
+            public int numConstraints;
+            public string[] constraintsName;
+            public string[] constraintsEquation;
             public int addConstraint(string name, string equation)
             {
-                // If Number of Constraints is at max number allowed => send error message to user
                 if (numConstraints == MAX_CONSTRAINT_NUM)
                 {
                     swApp.SendMsgToUser("You cannot have more than " + MAX_CONSTRAINT_NUM + " constraints!");
-                    return 0; // Return error
+                    return 0;
+                }
+                if (constraintsName == null)
+                {
+                    constraintsName = new string[MAX_CONSTRAINT_NUM];
+                }
+                if (constraintsEquation == null)
+                {
+                    constraintsEquation = new string[MAX_CONSTRAINT_NUM];
                 }
 
-                // If constraints name list is empty => add first name
-                if (constraintsName == null) { constraintsName = new string[MAX_CONSTRAINT_NUM]; }
-                
-                // If constraints equation list is empty => add first constraint
-                if (constraintsEquation == null) { constraintsEquation = new string[MAX_CONSTRAINT_NUM]; }
+                // Check if there is already constraint called name
 
-                // If there is already constraint called name in list => return error
                 for (int i = 0; i < MAX_CONSTRAINT_NUM; i++)
                 {
                     if (name == constraintsName[i])
                     {
                         swApp.SendMsgToUser("There is already constraint called " + name + "!");
-                        return 0; // Return error
+                        return 0;
                     }
                 }
 
-                // Set equation, name, and increment number of current constraints
                 constraintsEquation[numConstraints] = equation;
                 constraintsName[numConstraints] = name;
                 numConstraints = numConstraints + 1;
 
-                return 1; // Return success
+                return 1;
             }
-
-
-            /// <summary>
-            /// Function Name: removeConstraint
-            /// Description: Removes a consraint name and equation from the list of current constraints
-            /// </summary>
-            /// <param name="name">Name of constraint</param>
-            /// <returns></returns>
             public int removeConstraint(string name)
             {
-                // Iterate through the constraints to check to check for constraint name
                 for (int i = 0; i < numConstraints; i++)
                 {
-                    // if the name of the constraint is found => set the name in list to null
                     if (constraintsName[i] == name)
                     {
                         constraintsName[i] = null;
 
-                        // Reorder the constraints in the list
                         for (int j = i; j < numConstraints; j++)
                         {
                             constraintsName[j] = constraintsName[j + 1];
@@ -122,17 +95,13 @@ namespace CS80Project
                         }
 
                         numConstraints = numConstraints - 1;
-                        return 1; // Return success
+                        return 1;
                     }
                 }
                 swApp.SendMsgToUser("There is no constraint " + name);
-                return 0; // Return error
+                return 0;
             }
 
-            /// <summary>
-            /// Function Name: setConstraints
-            /// Description: constructor - sets the initial constraints variables
-            /// </summary>
             public void setConstraints()
             {
                 numConstraints = 0;
@@ -142,27 +111,21 @@ namespace CS80Project
 
         }
 
-        /// <summary>
-        ///     Struct: Variable Stuct handling
-        ///     Description: Main Back-end for variable handling on CAD objects
-        /// </summary>
         public struct Variables
         {
-            public int numVariables; // Number of current variables
-            public string[] variablesName; // List of variable names
-            public string[] variablesMax; // Upper limit on a variable
-            public string[] variablesMin; // Lower limit on a variable
+            public int numVariables;
+            public string[] variablesName;
+            public string[] variablesMax;
+            public string[] variablesMin;
             public int[] variablesType; // 0: Double, 1:int
 
             /// <summary>
-            /// Function Name: addVariable
-            /// Description: Adds a variable to the current variables list
+            /// 
             /// </summary>
-            /// <param name="name">Name of variable</param>
-            /// <returns>error - 1, success -  0</returns>
+            /// <param name="name"></param>
+            /// <returns></returns>
             public int addVariable(string name, string max, string min, int type)
             {
-                // If the variable name list is null => set all variable variables
                 if (variablesName == null)
                 {
                     variablesName = new string[MAX_VARIABLE_NUM];
@@ -171,17 +134,14 @@ namespace CS80Project
                     variablesType = new int[MAX_VARIABLE_NUM];
                 }
 
-                // If the numer of variables is at max limit => send max limit hit error
                 if (numVariables >= MAX_CONSTRAINT_NUM)
                 {
                     swApp.SendMsgToUser("Error: Cannot declare more than " + MAX_VARIABLE_NUM + " variables");
-                    return 1; // return error
+                    return 1;
                 }
 
-                // Iterate through current variables to see if the variable to be added is a duplicate
                 for (int i = 0; i < numVariables; i++)
                 {
-                    // If duplicate found => send error
                     if (variablesName[i] == name)
                     {
                         swApp.SendMsgToUser("Error: Variable name is already in use");
@@ -189,43 +149,35 @@ namespace CS80Project
                     }
                 }
 
-                // If the lower limit is >= the upper limit => send error
                 if( float.Parse(min, System.Globalization.CultureInfo.InvariantCulture) >= float.Parse(max, System.Globalization.CultureInfo.InvariantCulture) )
                 {
                     swApp.SendMsgToUser("Error: Invalid min and max values");
                     return 1;
                 }
 
-                // Set the new variable
-                variablesName[numVariables] = name;
+                    variablesName[numVariables] = name;
                 variablesMax[numVariables] = max;
                 variablesMin[numVariables] = min;
                 variablesType[numVariables] = type;
 
-                numVariables++; // Increment the number of current variables
+                numVariables++;
 
-                return 0; // Return success
+                return 0;
             }
 
             /// <summary>
-            /// Function Name: removeVariable
-            /// Description: Removes the selected variable from the list of variables
+            /// 
             /// </summary>
-            /// <param name="name">The variable name</param>
-            /// <returns>0 - success, 1 - error</returns>
+            /// <param name="name"></param>
+            /// <returns></returns>
             public int removeVariable(string name)
             {
-                // Loop through the current variables
                 for (int i = 0; i < numVariables; i++)
                 {
-                    // If the to-be-removed variable is found 
-                    // => delete the variable and resort the variable list
                     if (name == variablesName[i])
                     {
-                        variablesName[i] = null; // Set the selected variable name to null
+                        variablesName[i] = null;
 
-                        // Loop through the variable name list from the deleted variable index
-                        // to the end of the list to reorder
                         for (int j = i; j < numVariables; j++)
                         {
                             variablesName[j] = variablesName[j + 1];
@@ -234,26 +186,18 @@ namespace CS80Project
                             variablesType[j] = variablesType[j + 1];
                         }
 
-                        numVariables--; // Decrement current variables counter
-                        return 0; // Return success
+                        numVariables--;
+                        return 0;
                     }
                 }
                 swApp.SendMsgToUser("Error: Variable doesn't exist");
-                return 1; // Return error
+                return 1;
             }
 
-            /// <summary>
-            /// Function Name: isVariable
-            /// Description: Checks to see if there is a variable with name "name"
-            /// </summary>
-            /// <param name="name">Name of variable</param>
-            /// <returns>true - name exists, false - name doesn't exist</returns>
             public bool isVariable(string name)
             {
-                // Loop through current variables
                 for (int i = 0; i < numVariables; i++)
                 {
-                    // If found name => return true
                     if (variablesName[i] == name)
                     {
                         return true;
@@ -262,11 +206,6 @@ namespace CS80Project
                 return false;
             }
 
-            /// <summary>
-            /// Function Name: 
-            /// </summary>
-            /// <param name="name"></param>
-            /// <returns></returns>
             public int indexVariable(string name)
             {
                 for (int i = 0; i < numVariables; i++)
@@ -279,7 +218,7 @@ namespace CS80Project
                 return -1;
             }
 
-            public void setVariables() //sets variables inputted by user
+            public void setVariables()
             {
                 numVariables = 0;
                 variablesName = new string[MAX_VARIABLE_NUM];
@@ -288,7 +227,7 @@ namespace CS80Project
                 variablesType = new int[MAX_VARIABLE_NUM];
             }
 
-            public string[] getValues() //gets values provided by user
+            public string[] getValues()
             {
                 ModelDoc2 swModelDoc = swApp.ActiveDoc;
                 EquationMgr swEqnMgr = swModelDoc.GetEquationMgr();
@@ -322,7 +261,7 @@ namespace CS80Project
 
         #region Add-ins
 
-        public bool ConnectToSW(object ThisSW, int Cookie) //This is where we create the UI
+        public bool ConnectToSW(object ThisSW, int Cookie)
         {
             swApp = ThisSW as SldWorks;
             swApp.SetAddinCallbackInfo2(0, this, Cookie);
@@ -331,14 +270,14 @@ namespace CS80Project
             string[] paths = System.Environment.GetEnvironmentVariable("PATH").Split(';');
             foreach (string path in paths)
             {
-                if( path.Contains("Python3") && !path.Contains("Scripts") )
+                if( path.Contains("Python") && !path.Contains("Scripts") )
                 {
                     pythonLocation = path + "python.exe";
                     break;
                 }
             }
 
-            LoadUI();//UI is loaded
+            LoadUI();
             
             return true;
         }
@@ -433,7 +372,7 @@ namespace CS80Project
             return null;
         }
 
-        public bool setPythonLocation(string path) //This function takes the user's input and syncs with the user's python.exe
+        public bool setPythonLocation(string path)
         {
             ProcessStartInfo psi = new ProcessStartInfo();
 
@@ -468,7 +407,7 @@ namespace CS80Project
 
             ProcessStartInfo psi = new ProcessStartInfo();
 
-            if (pythonLocation == null) //Activates if user hasn't connected their Python.exe
+            if (pythonLocation == null)
             {
                 sendMessageToUser("You have to set your python location");
                 //pythonLocation = @"C:\Users\Paul Lee\AppData\Local\Programs\Python\Python37-32\python.exe";
@@ -517,7 +456,7 @@ namespace CS80Project
             return temp;
         }
 
-        public void generateRandomObject() //this function makes the "generate Random Object" button in the GUI work
+        public void generateRandomObject()
         {
             string[] arguments = new string[variables.numVariables + constraints.numConstraints+1];
             arguments[0] = variables.numVariables.ToString() + "," + constraints.numConstraints.ToString();
@@ -538,7 +477,7 @@ namespace CS80Project
             {
                 return;
             }
-            else if (pythonResult[1] == "false") { //If couldn't create object
+            else if (pythonResult[1] == "false") {
                 sendMessageToUser("Failed to generate random object");
                 return;
             }
@@ -627,9 +566,24 @@ namespace CS80Project
             swModelDoc.ForceRebuild3(true);
         }
 
-        public void sendMessageToUser(string message)
+        public void sendMessageToUser(string message) //for errors (warning yellow triangle)
         {
             swApp.SendMsgToUser(message);
+        }
+
+        public void sendMessageToUser2(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
+        {
+            swApp.SendMsgToUser2(message, icon, 2);
+        }
+
+        public void sendMessageToUser3(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
+        {
+            swApp.SendMsgToUser2(message, icon, 3);
+        }
+
+        public void sendMessageToUser4(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
+        {
+            swApp.SendMsgToUser2(message, icon, 4);
         }
 
         #endregion
@@ -667,14 +621,15 @@ namespace CS80Project
                     {
                         outFile.WriteLine("{0},{1}", constraints.constraintsName[i], constraints.constraintsEquation[i]);
                     }
-                    swApp.SendMsgToUser("Variables and Constraints are saved");
+                    //   swApp.SendMsgToUser2("Variables and Constraints are saved",icon,2);
+                    sendMessageToUser2("Variables and Constraints are saved", 2);
                 }
             }
 
 
             catch (Exception e)
             {
-                swApp.SendMsgToUser("Save Error"); //There was an error saving
+                swApp.SendMsgToUser("Save Error");
                 return;
             }
         }
@@ -695,7 +650,7 @@ namespace CS80Project
 
                     if (line != "CS80PROJECT_VARIABLES_AND_CONSTRAINTS")
                     {
-                        swApp.SendMsgToUser("You open the wrong file");
+                        swApp.SendMsgToUser("You opened the wrong file");
                         return;
                     }
 
@@ -733,8 +688,8 @@ namespace CS80Project
                         constraints.constraintsName[i] = csLine[0];
                         constraints.constraintsEquation[i] = csLine[1];
                     }
-
-                    swApp.SendMsgToUser("Variables and Constraints are loaded");
+                    sendMessageToUser2("Variables and constrains have been loaded", 2);
+                    //swApp.SendMsgToUser("Variables and Constraints are loaded");
                 }
 
             }
@@ -783,7 +738,7 @@ namespace CS80Project
 
         #region Optimization
 
-        public bool optimization(string learningRate) //The optimization function begins here
+        public bool optimization(string learningRate)
         {
             string[] pythonResult = runPython("optimization.py");
 /*
@@ -811,13 +766,13 @@ namespace CS80Project
                 stdout = process.StandardOutput.ReadToEnd();
             }
 */
-            if (pythonResult == null) //could not get Python result
+            if (pythonResult == null)
             {
                 return false;
             }
             else if (pythonResult[1] != "")
             {
-                sendMessageToUser(pythonResult[1]);
+                sendMessageToUser2(pythonResult[1],2);
             }
             else
             {
@@ -827,7 +782,7 @@ namespace CS80Project
             return false;
         }
 
-        public void learning (string result, string learningRateString) //learning algorithm
+        public void learning (string result, string learningRateString)
         {
             string[] csResult = result.Split(',');
             float learningRate = float.Parse(learningRateString);
