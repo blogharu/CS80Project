@@ -256,7 +256,8 @@ namespace CS80Project
 
                         outFile.WriteLine(sample);
                     }
-                    SolidWorksSingleton.sendMessageToUser("Random objects are created");
+                    SolidWorksSingleton.sendMessageToUser2("Random objects are created", 2);
+
                 }
             }
             catch(Exception err)
@@ -346,7 +347,7 @@ namespace CS80Project
                         outFile.WriteLine(sample);
                     }
                 }
-                SolidWorksSingleton.sendMessageToUser("Random objects are created");
+                SolidWorksSingleton.sendMessageToUser2("Random objects are created",2);
             }
             catch (Exception err)
             {
@@ -384,12 +385,13 @@ namespace CS80Project
             SolidWorksSingleton.setObject(originalVariables);
             buttonBackToOriginal.Enabled = false;
         }
+        //sendMessageToUser2("Variables and Constraints are saved", 2);
 
         private void buttonPythonEXE_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
             if (SolidWorksSingleton.setPythonLocation(openFileDialog1.FileName)) {
-                SolidWorksSingleton.sendMessageToUser("Python location is saved");
+                SolidWorksSingleton.sendMessageToUser2("Python location is saved",2); //line393
                 buttonPythonEXE.Enabled = false;
             }
             else
