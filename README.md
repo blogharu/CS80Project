@@ -77,9 +77,22 @@ This section will cover usage and functionality of the add-on.
 
 ### Functionality
 
+#### Variables
+The add-on uses SolidWorks variables; that is, variables that are created using SolidWorks macros. It loads these already created variables into the add-on such that the object is able to be manipulated. 
 
+#### Constraints
 
-### Common Uses
+#### Auto-Generation
+
+#### Optimization
+
+### Use Cases
+
+Listed below are the different use cases for our add-on.
+
+#### Design of Experiments
+
+The main use of this add-on is to rapidly generate different variations of an object in-order to create a variable spread of the object and optimize it through different generations using statistics. We gather data: flow rate for filters, lift for propellers, etc., on the spread of the object and then feed this data into the optimization functions
 
 ## Demo Video
 
@@ -89,5 +102,12 @@ Below links to a demo video:
 
 ## Troubleshoot
 
-- Can't find the add-on
-	This is because the add-on isn't showing. To fix this one must
+- Can't find the add-on. This is because the add-on isn't showing. To fix this:
+
+	- Click the setting's (gear in top menu bar) dropdown menu
+	- Click the "Add-ins" option
+	- Under the "Other Add-ins" section click the checkbox next to "Addin"
+	
+## Future Implementations
+
+For this project we plan on attaching different statistical methods to it. Right now only one statistical method is supported: the regression method, but there are plans to increase the capabilities of this thiis project to use different methods including AI and Machine Learning. The possibilities of attaching whatever model you want to this program are endless.
