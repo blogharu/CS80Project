@@ -627,9 +627,24 @@ namespace CS80Project
             swModelDoc.ForceRebuild3(true);
         }
 
-        public void sendMessageToUser(string message)
+        public void sendMessageToUser(string message) //for errors (warning yellow triangle)
         {
             swApp.SendMsgToUser(message);
+        }
+
+        public void sendMessageToUser2(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
+        {
+            swApp.SendMsgToUser2(message, icon, 2);
+        }
+
+        public void sendMessageToUser3(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
+        {
+            swApp.SendMsgToUser2(message, icon, 3);
+        }
+
+        public void sendMessageToUser4(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
+        {
+            swApp.SendMsgToUser2(message, icon, 4);
         }
 
         #endregion
@@ -667,7 +682,8 @@ namespace CS80Project
                     {
                         outFile.WriteLine("{0},{1}", constraints.constraintsName[i], constraints.constraintsEquation[i]);
                     }
-                    swApp.SendMsgToUser("Variables and Constraints are saved");
+                    //   swApp.SendMsgToUser2("Variables and Constraints are saved",icon,2);
+                    sendMessageToUser2("Variables and Constraints are saved", 2);
                 }
             }
 
@@ -695,7 +711,7 @@ namespace CS80Project
 
                     if (line != "CS80PROJECT_VARIABLES_AND_CONSTRAINTS")
                     {
-                        swApp.SendMsgToUser("You open the wrong file");
+                        swApp.SendMsgToUser("You opened the wrong file");
                         return;
                     }
 
@@ -734,7 +750,8 @@ namespace CS80Project
                         constraints.constraintsEquation[i] = csLine[1];
                     }
 
-                    swApp.SendMsgToUser("Variables and Constraints are loaded");
+                    sendMessageToUser2("Variables and constrains have been loaded", 2);
+                    //swApp.SendMsgToUser("Variables and Constraints are loaded");
                 }
 
             }
@@ -817,7 +834,7 @@ namespace CS80Project
             }
             else if (pythonResult[1] != "")
             {
-                sendMessageToUser(pythonResult[1]);
+                sendMessageToUser2(pythonResult[1], 2);
             }
             else
             {
