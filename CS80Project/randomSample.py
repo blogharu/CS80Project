@@ -42,6 +42,7 @@ for i in range(numConstraints):
     for key in tempDic.keys():
         dicCheckIsVariableInConstraints[key] += tempDic[key]
 
+# Set initial point where the program starts optimize.
 opInitial = []
 for var in variablesDicID.keys():
     ran = mf.getRandomNumber(variablesListBound[variablesDicID[var]])
@@ -53,12 +54,17 @@ for var in variablesDicID.keys():
         if dicCheckIsVariableInConstraints[var] <= 0:
             constraintsList.append([0,var+"-("+str(ran)+")"])
 
+# Set the function that the program will optimize.
 opObjFun = mf.getObjectiveFunctionForRandomGeneration(opInitial) ########### This is for maximize the result!
 opConsList = mf.getConstraintsForOptimization(constraintsList,variablesDicID)
+
+# Set the boundary of each variable.
 opBound = tuple(variablesListBound)
 
+# Start optimization.
 sol = minimize(opObjFun,opInitial,method='SLSQP',bounds=opBound,constraints=opConsList)
 
+# Return the result.
 if sol.success:
     print(mf.optimizationResultNPArrayToCSVString(sol.x), file=sys.stdout)
 else:
