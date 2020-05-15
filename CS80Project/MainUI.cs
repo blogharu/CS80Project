@@ -391,7 +391,7 @@ namespace CS80Project
         {
             openFileDialog1.ShowDialog();
             if (SolidWorksSingleton.setPythonLocation(openFileDialog1.FileName)) {
-                SolidWorksSingleton.sendMessageToUser2("Python location is saved",2); //line393
+                SolidWorksSingleton.sendMessageToUser2("Python location is saved",2); 
                 buttonPythonEXE.Enabled = false;
             }
             else
