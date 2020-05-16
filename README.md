@@ -77,14 +77,23 @@ This section will cover usage and functionality of the add-on.
 
 ### Functionality
 
+Below we will go over the different funct
+
 #### Variables
-The add-on uses SolidWorks variables; that is, variables that are created using SolidWorks macros. It loads these already created variables into the add-on such that the object is able to be manipulated. 
+
+The add-on uses SolidWorks variables; that is, variables that are created using SolidWorks macros. It loads these already created variables into the add-on such that the object is able to be manipulated through our random generation python scripts.
 
 #### Constraints
 
+The add-on is able to constrain the object such that it doesn't lose shape while auto generating. Examples of common constraints are volume and length constraints.
+
 #### Auto-Generation
 
+As stated above, the add-on is able to auto generate different objects based off of the variables and constraints present in SolidWorks.
+
 #### Optimization
+
+Lastly, optimization is done using a formatted CSV file with filled in experimental data from different variations of the same object. A user is able to load this CSV file into the add-on to constrain the variables and hone in on an optimal solution based on the experiments.
 
 ### Use Cases
 
