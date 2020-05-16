@@ -263,14 +263,17 @@ namespace CS80Project
             }
 
             /// <summary>
-            /// Function Name: 
+            /// Function Name: indexVariable
+            /// Description: This function returns the given variable's index
             /// </summary>
-            /// <param name="name"></param>
-            /// <returns></returns>
+            /// <param name="name">Variable name</param>
+            /// <returns>i - index, -1 - Doesn't exist</returns>
             public int indexVariable(string name)
             {
+                // Loop through the current variables
                 for (int i = 0; i < numVariables; i++)
                 {
+                    // if varaible name is found => return index
                     if (variablesName[i] == name)
                     {
                         return i;
@@ -279,6 +282,12 @@ namespace CS80Project
                 return -1;
             }
 
+            /// <summary>
+            /// Function Name: setVariable
+            /// Description: Sets the variables
+            /// </summary>
+            /// <param name=""></param>
+            /// <returns>N/A</returns>
             public void setVariables() //sets variables inputted by user
             {
                 numVariables = 0;
@@ -288,15 +297,25 @@ namespace CS80Project
                 variablesType = new int[MAX_VARIABLE_NUM];
             }
 
+            /// <summary>
+            /// Function Name: getValues
+            /// Description: returns the variable values
+            /// </summary>
+            /// <param name=""></param>
+            /// <returns>N/A</returns>
             public string[] getValues() //gets values provided by user
             {
+                // Hooked into solidworks
                 ModelDoc2 swModelDoc = swApp.ActiveDoc;
                 EquationMgr swEqnMgr = swModelDoc.GetEquationMgr();
 
+                // Create the variables list
                 string[] result = new string[numVariables];
 
+                // Loop through the solidworks variables
                 for (int i = 0; i < swEqnMgr.GetCount(); i++)
                 {
+                    // if there is a global variable i => return the variable
                     if (swEqnMgr.GlobalVariable[i])
                     {
                         int index = indexVariable(swEqnMgr.Equation[i].ToString().Split('"')[1]);
@@ -306,9 +325,15 @@ namespace CS80Project
                         }
                     }
                 }
-                return result;
+                return result; // Return result
             }
 
+            /// <summary>
+            /// Function Name: roundUpValue
+            /// Description: Rounds the floats
+            /// </summary>
+            /// <param name="floatString">The var name</param>
+            /// <returns>string of the rounded float</returns>
             public string roundUpValue(string floatString)
             {
                 float fnum = float.Parse(floatString);
@@ -322,15 +347,24 @@ namespace CS80Project
 
         #region Add-ins
 
+        /// <summary>
+        /// Function Name: ConnectToSW
+        /// Description: Connects to solidworks API
+        /// </summary>
+        /// <param name="ThisSW">SolidWorks session</param>
+        /// <param name="Cookie">SolidWorks session cookie</param>
+        /// <returns>Returns success bolean</returns>
         public bool ConnectToSW(object ThisSW, int Cookie) //This is where we create the UI
         {
-            swApp = ThisSW as SldWorks;
+            swApp = ThisSW as SldWorks; // 
             swApp.SetAddinCallbackInfo2(0, this, Cookie);
-            SessionCookie = Cookie;
+            SessionCookie = Cookie; // Session cookie
     
+            // Autoloading Python3 from path
             string[] paths = System.Environment.GetEnvironmentVariable("PATH").Split(';');
             foreach (string path in paths)
             {
+                // If the path contains Python3 => set python location to the path
                 if( path.Contains("Python3") && !path.Contains("Scripts") )
                 {
                     pythonLocation = path + "python.exe";
@@ -343,17 +377,27 @@ namespace CS80Project
             return true;
         }
 
+        /// <summary>
+        /// Function Name: DisconnectFromSw
+        /// Description: Disconnects to solidworks API
+        /// </summary>
+        /// <returns>Returns success bolean</returns>
         public bool DisconnectFromSW()
         {
             // This is where we destroy the UI
 
-            UnloadUI();
+            UnloadUI(); // Unloads the UI from SolidWorks
             GC.Collect();
             swApp = null;
 
             return true;
         }
 
+        /// <summary>
+        /// Function Name: LoadUI
+        /// Description: Loads the UI to SolidWorks
+        /// </summary>
+        /// <returns>Returns success bolean</returns>
         private void LoadUI()
         {
             // Add add-ins icon
@@ -365,6 +409,10 @@ namespace CS80Project
             mMainUI.setSolidWorksSingleton(this);
         }
 
+        /// <summary>
+        /// Function Name: UnloadUI
+        /// Description: Unloads the Add-ons UI from SolidWorks
+        /// </summary>
         private void UnloadUI()
         {
             mMainUI = null;
@@ -387,7 +435,7 @@ namespace CS80Project
             Key.SetValue("Description", "This is a description");
         }
 
-        // Unregister
+        // Unregister from SolidWorks
         [ComUnregisterFunction]
         private static void UnregisterAssembly(Type t)
         {
@@ -400,29 +448,35 @@ namespace CS80Project
 
         #region Helping functions
 
+        // Gets the path to our directory
         public string getPathDebug()
         {
             return Path.GetDirectoryName(typeof(Addin).Assembly.CodeBase).Replace(@"file:\", "");
         }
 
+        // Returns a random number for generating the given variable
         private string randomNumber(string max, string min, int type)
         {
-            Random rand = new Random();
+            Random rand = new Random(); // New random number
+            
+            // If the type == float => parse the number and get a number in range
             if (type == 0)
             {
                 float fmax = float.Parse(max);
                 float fmin = float.Parse(min);
                 float random = fmin + (fmax - fmin) * (float)rand.NextDouble();
-                return random.ToString();
+                return random.ToString(); // Return random number
             }
+            // Else if the type is a int
             else if (type == 1)
             {
                 int imax = (int)Math.Round(float.Parse(max),0);
                 int imin = (int)Math.Round(float.Parse(min), 0);
                 if (imax == imin)
                 {
-                    return imax.ToString();
+                    return imax.ToString(); // return random int
                 }
+                // else return a random int
                 else
                 {
                     int random = imin + rand.Next(2 ^ 10) % (imax - imin);
@@ -433,19 +487,23 @@ namespace CS80Project
             return null;
         }
 
+        // Python location button backened
         public bool setPythonLocation(string path) //This function takes the user's input and syncs with the user's python.exe
         {
+            // Ges the procss information
             ProcessStartInfo psi = new ProcessStartInfo();
 
+            // Gets file path
             psi.FileName = path;
-            psi.WorkingDirectory = getPathDebug();
-            psi.Arguments = "mathFunctions.py";
+            psi.WorkingDirectory = getPathDebug(); // Gets working dir
+            psi.Arguments = "mathFunctions.py"; // Sets python arg
 
-            psi.UseShellExecute = false;
-            psi.CreateNoWindow = true;
-            psi.RedirectStandardOutput = true;
-            psi.RedirectStandardError = true;
-
+            psi.UseShellExecute = false; // Dont use shell
+            psi.CreateNoWindow = true; // Create a new window
+            psi.RedirectStandardOutput = true; // Redirect output
+            psi.RedirectStandardError = true; // Redirect error
+    
+            // Try to set python location for use
             try
             {
                 using (Process process = Process.Start(psi))
@@ -454,20 +512,24 @@ namespace CS80Project
                     return true;
                 }
             }
-            catch (Exception e)
+            catch (Exception e) // catch on error
             {
                 return false;
             }
         }
 
+        // Function to use python
         public string[] runPython(string path)
         {
+            // Vars for args
             string[] result = new string[2];
             result[0] = "";
             result[1] = "";
 
+            // Set process
             ProcessStartInfo psi = new ProcessStartInfo();
 
+            // If no python location set return fail
             if (pythonLocation == null) //Activates if user hasn't connected their Python.exe
             {
                 sendMessageToUser("You have to set your python location");
@@ -475,21 +537,22 @@ namespace CS80Project
                 return null;
             }
             //psi.FileName = @"C:\Users\Paul Lee\AppData\Local\Programs\Python\Python37-32\python.exe";///////////////////////////
-            psi.FileName = pythonLocation;
-            psi.WorkingDirectory = getPathDebug();
-            psi.Arguments = path;
+            psi.FileName = pythonLocation; // Get python location
+            psi.WorkingDirectory = getPathDebug(); // Set working dir
+            psi.Arguments = path; // Get args
 
             psi.UseShellExecute = false;
             psi.CreateNoWindow = true;
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
 
+            // Get the results of python script
             using (Process process = Process.Start(psi))
             {
                 result[0] = process.StandardOutput.ReadToEnd();
                 result[1] = process.StandardError.ReadToEnd();
             }
-            return result;
+            return result; // Return results
         }
 
         #endregion
@@ -627,21 +690,25 @@ namespace CS80Project
             swModelDoc.ForceRebuild3(true);
         }
 
+        // Warning Message
         public void sendMessageToUser(string message) //for errors (warning yellow triangle)
         {
             swApp.SendMsgToUser(message);
         }
 
+        // Specifies which message => i message
         public void sendMessageToUser2(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
         {
             swApp.SendMsgToUser2(message, icon, 2);
         }
 
+        // Specifies which message => ? message
         public void sendMessageToUser3(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
         {
             swApp.SendMsgToUser2(message, icon, 3);
         }
 
+        // Specifies which message => X message
         public void sendMessageToUser4(string message, int icon) //for others (1 == Triangle warning, 2 == "i" bubble, 3 == "?", 4 == "X" 
         {
             swApp.SendMsgToUser2(message, icon, 4);
